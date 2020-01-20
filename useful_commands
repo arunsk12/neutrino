@@ -1,0 +1,4 @@
+HIVE
+====
+
+for app in `yarn application -list | awk '$6 == "ACCEPTED" { print $1 }'`; do yarn application -kill "$app";  done
