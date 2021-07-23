@@ -3,6 +3,8 @@
 
 https://youtu.be/3jPYk7ucrjo
 
+https://cognitiveclass.ai/courses/ibm-blockchain-foundation-dev
+
 
 
 https://www.howtogeek.com/702766/what-is-a-gpu-graphics-processing-units-explained/
