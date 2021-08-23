@@ -1,0 +1,524 @@
+Docker commands
+================
+docker version
+
+docker volume ls
+
+# Create volume drives
+
+docker volume create --name my_volume
+
+docker run -ti --rm -v my_volume:/my_volume alpine
+
+echo "Example1" > /my_volume/Example1.txt
+
+docker run -ti --rm -v my_volume:/my_volume alpine
+
+docker run -ti --name=alpine -v my_volume:/my_volume alpine
+
+docker volume inspect my_volume
+
+#shared volume
+
+docker volume create --name shared_volume
+
+docker volume ls
+
+docker volume inspect shared_volume
+ 
+docker run -ti --rm -v shared_volume:/spark alpine
+
+
+#Remove the dangling images 
+docker images -f dangling=true
+
+#Docker prune command 
+docker system prune -a
+
+#Check the list of images 
+docker images
+
+#Check the running process
+docker ps
+
+docker container ps -a
+
+
+# My repo in docker hub
+docker pull arunsk12/scala-spark:latest
+
+$docker_label = "arunsk12/scala-spark"
+$docker_label
+
+or if existing image exist
+
+docker images
+
+$docker_label = "a3562aa0b991"
+$docker_label
+
+
+How to install and configure spark 
+==================================
+
+Fresh installation :
+====================
+ 
+cd C:\VM\Docker
+
+docker images 
+
+docker image build --no-cache -t spark-cooked-3-ways . 
+
+docker image build -t spark-cooked-3-ways . 
+
+
+docker images 
+
+#Without shared drives
+docker run -it --rm spark-cooked-3-ways /bin/bash
+
+# INSTALL SPARK IN SHARED DRIVE
+
+	cd my_volume
+	
+	whoami
+	
+	apk --update add wget tar bash
+
+	wget http://apache.mirror.anlx.net/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz
+
+	tar -xzf spark-2.4.5-bin-hadoop2.7.tgz
+	
+    mv spark-2.4.5-bin-hadoop2.7 /app/spark 
+
+#Existing Installation
+======================
+docker commit
+
+docker network ls
+
+docker network create spark_network
+
+docker ps -a 
+
+docker images
+
+docker stop my-spark-test
+docker rm my-spark-test
+
+docker image build --no-cache -t spark-cooked-3-ways . 
+
+docker image build -t spark-cooked-3-ways . 
+
+
+# with shared drives
+docker run --rm -it -v my_volume:/my_volume -v shared_volume:/app --name my-spark-test --hostname my-spark-test --network spark_network spark-cooked-3-ways:latest /bin/bash
+
+
+#SDK INSTALL
+
+curl https://sdk.cloud.google.com | bash
+
+source /root/.bashrc
+
+source /app/google-cloud-sdk/completion.bash.inc
+
+source /app/google-cloud-sdk/path.bash.inc
+
+echo $PATH.
+
+gcloud components install gsutil bq core
+
+
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+
+python3 get-pip.py
+
+
+pip install --upgrade apache-beam[gcp]
+
+pip install utils
+
+yum install python3-dev
+
+pip install --upgrade pip setuptools
+
+yum install -y python3-devel.x86_64
+
+gcloud components install gsutil bq core
+
+pip install tweepy
+
+/*
+pip install google-api-core
+
+pip install google-cloud-pubsub
+
+pip install google-cloud-storage
+
+pip install google-api-python-client
+*/
+
+gcloud init
+
+gcloud auth login
+
+gcloud config set project sparkcooked3ways
+
+
+export GOOGLE_APPLICATION_CREDENTIALS=/app/googly/cred.json
+
+gcloud pubsub topics publish tweepy --project sparkcooked3ways --message "hello 08:19"
+
+python3 -m apache_beam.examples.wordcount --output outputs
+
+
+gsutil ls gs://sparkcooked3ways
+
+cd /app/googly && ls -l 
+
+python3 2pubsub.py
+
+
+
+
+
+===================================================================================
+
+/app/spark_python1
+
+wget -O tagore_spirit_of_japan http://www.gutenberg.org/cache/epub/33131/pg33131.txt
+
+$SPARK_HOME/bin/spark-submit \
+  --master local[*] \
+  /app/spark_python1/SimpleApp.py
+
+$SPARK_HOME/bin/spark-submit   --master local[*]   /app/spark_python1/SimpleApp.py     
+
+
+/app/spark/bin/pyspark
+
+--------------------------------------------------------------------------------------------------------------------
+
+#START THE MASTER NODE
+docker run -it --rm -v my_volume:/my_volume -v shared_volume:/app --name spark-master --hostname spark-master -p 7077:7077 -p 8080:8080 --network spark_network spark-cooked-3-ways:latest /bin/sh
+
+apk --update add bash
+
+/app/spark/bin/spark-class org.apache.spark.deploy.master.Master --ip `hostname` --port 7077 --webui-port 8080
+
+#START THE WORKER NODE
+docker run -it --rm -v my_volume:/my_volume -v shared_volume:/app --name spark-worker --hostname spark-worker --network spark_network spark-cooked-3-ways:latest /bin/sh
+
+apk --update add bash
+
+/app/spark/bin/spark-class org.apache.spark.deploy.worker.Worker --webui-port 8080 spark://spark-master:7077
+
+#START THE WORKER NODE 2
+docker run -it --rm -v my_volume:/my_volume -v shared_volume:/app --name spark-test --hostname spark-test --network spark_network spark-cooked-3-ways:latest /bin/sh
+
+apk --update add bash
+
+
+# Pi Example
+/app/spark/bin/spark-submit --master spark://spark-master:7077 --class org.apache.spark.examples.SparkPi /app/spark/examples/jars/spark-examples_2.11-2.4.5.jar 100
+
+SCALA REPL
+
+
+
+
+SCALA
+-----
+docker run -it --rm -v my_volume:/my_volume -v shared_volume:/app a3562aa0b991:latest /bin/sh
+
+	cd /my_volume
+	
+	wget https://piccolo.link/sbt-1.3.10.tgz
+
+	tar -xzf sbt-1.3.10.tgz
+	
+	mv sbt /app
+	
+	/app/sbt/bin/sbt
+	
+	Scala : HW project 
+	==================
+	cd /app
+	
+	mkdir foo-build
+	cd foo-build
+	touch build.sbt
+	
+	/app/sbt/bin/sbt
+	
+	sbt:foo-build> exit
+	
+	ls 
+		-> Will have project dirs now
+	
+	/app/sbt/bin/sbt	
+	sbt:foo-build> compile
+	sbt:foo-build> run help && exit
+	
+	cd project
+	mkdir -p src/main/scala/example
+	
+	vi src/main/scala/example/Hello.scala 
+	
+package example
+
+object Hello extends App {
+println("Hello")
+}
+
+	/app/sbt/bin/sbt
+	
+	compile 
+	run
+	
+	set ThisBuild / scalaVersion := "2.12.7"
+	
+	sbt:foo-build> scalaVersion
+	
+	sbt:foo-build> session save
+	
+	sbt:foo-build> reload
+	
+	TEST CASE IN SCALA
+	=====================
+	vi build.sbt
+	
+	ThisBuild / scalaVersion := "2.12.7"
+	ThisBuild / organization := "com.example"
+
+	lazy val hello = (project in file("."))
+	  .settings(
+		name := "Hello",
+		libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+	  )
+	
+	/app/sbt/bin/sbt
+
+	reload
+	
+	mkdir -p  src/test/scala
+	
+	vi app/foo-build/src/test/scala/HelloSpec.scala
+	
+import org.scalatest._
+
+class HelloSpec extends FunSuite with DiagrammedAssertions {
+  test("Hello should start with H") {
+	assert("hello".startsWith("H"))
+  }
+}
+	/app/sbt/bin/sbt
+	
+	test
+	
+	~testQuick
+	
+	Weather Man - https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
+	============
+	
+	libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.9",
+    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+	
+	/app/sbt/bin/sbt
+	
+	scala> console
+	
+	scala> :paste
+	
+import scala.concurrent._, duration._
+import gigahorse._, support.okhttp.Gigahorse
+import play.api.libs.json._
+
+Gigahorse.withHttp(Gigahorse.config) { http =>
+val baseUrl = "https://www.metaweather.com/api/location"
+val rLoc = Gigahorse.url(baseUrl + "/search/").get.
+addQueryString("query" -> "London")
+val fLoc = http.run(rLoc, Gigahorse.asString)
+val loc = Await.result(fLoc, 10.seconds)
+val woeid = (Json.parse(loc) \ 0 \ "woeid").get
+val rWeather = Gigahorse.url(baseUrl + s"/$woeid/").get
+val fWeather = http.run(rWeather, Gigahorse.asString)
+val weather = Await.result(fWeather, 10.seconds)
+({Json.parse(_: String)} andThen Json.prettyPrint)(weather)
+}
+
+
+
+# scala and python basics
+Spark - Scala Application 1:
+
+
+	SQL
+	/app/spark/bin/spark-shell
+	
+	val textFile = spark.read.textFile("file:/app/foo-build/build.sbt")
+	textFile.count()
+	textFile.first()
+	val linesWithSpark = textFile.filter(line => line.contains("scala"))
+	textFile.filter(line => line.contains("scala")).count()
+	
+	cd /app && mkdir spark_scala1 && cd spark_scala1
+	mkdir -p src/main/scala
+	
+	vi src/main/scala/SimpleApp.scala
+	
+/* SimpleApp.scala */
+import org.apache.spark.sql.SparkSession
+
+object SimpleApp {
+def main(args: Array[String]) {
+val logFile = "file:/app/foo-build/build.sbt" // Should be some file on your system
+val spark = SparkSession.builder.appName("Simple Application").getOrCreate()
+val logData = spark.read.textFile(logFile).cache()
+val numAs = logData.filter(line => line.contains("scala")).count()
+val numBs = logData.filter(line => line.contains("test")).count()
+println(s"Lines with a: $numAs, Lines with b: $numBs")
+spark.stop()
+}
+}
+
+
+vi build.sbt
+
+name := "spark_scala1 Project"
+version := "1.0"
+scalaVersion := "2.12.10"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.5"
+
+
+cd /app/spark_scala1
+	
+find .
+
+/app/sbt/bin/sbt package
+
+/app/spark/bin/spark-submit \
+  --class "SimpleApp" \
+  --master local[*] \
+  target/scala-2.12/spark_scala1-project_2.12-1.0.jar
+	
+	
+	
+	
+	
+# DATAPROC - SPARK JOB	
+Spark - Scala Application 2:	
+	
+	gcloud dataproc jobs submit spark --cluster example-cluster \
+  --region=europe-west2 \
+  --class org.apache.spark.examples.SparkPi \
+  --jars file:///usr/lib/spark/examples/jars/spark-examples.jar -- 10
+	
+
+
+# TWEETS TO PUBSUB TO BQ - SPARK PROCESS ML ? 
+Spark - Scala Application 3:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CLOUDERAS Local Run
+=========
+docker pull cloudera/quickstart:latest
+
+docker images
+
+docker volume ls
+
+docker volume create
+
+docker volume ls
+
+#Get the volume detail from above
+
+docker run --hostname=quickstart.cloudera --privileged=true -t -i -v /home/mariam/project:/src -p 8888:8888 -p 80:80 -p 7180:7180 cloudera/quickstart /usr/bin/docker-quickstart
+
+===========HWX Docker==========
+
+powershell -ExecutionPolicy ByPass -File  .\start-sandbox-hdp-standalone_2-6-4.ps1
+
+OR - Run from Kitematic and run ~start-sandbox-hdp.sh
+
+
+// 2.6.5 version
+
+cd c:/Users/Aran/Documents/Docker/HDP_2.6.5_deploy-scripts_180624d542a25
+
+./deploy-script.sh
+
+
+docker stop sandbox-hdp
+docker stop sandbox-proxy
+docker ps
+
+docker start sandbox-hdp
+docker start sandbox-proxy
+docker ps
+
+
+
+http://sandbox.hortonworks.com:8080/#/login
+
+beeline -u jdbc:hive2://localhost:10000 -n default
+
+===================================================================================
+
+#http://prod.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-complete.csv (complete)
+#http://prod.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-2018.csv (yearly)
+
+http://prod.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-monthly-update-new-version.csv
+
+transaction,price,transfer_date,postcode,property_type,newly_built,duration,paon,saon,street,locality,city,district,county,ppd_category_type
+
+
+
+
+
+"title": "Download price paid monthly data from land registry",
+		"text": "%sh \n\n#  Remove old csv file if already exists in local /tmp directory\nif [ -e /tmp/pp-monthly.csv ]\nthen\n    rm -f /tmp/pp-monthly.csv\nfi\n\nwget http://prod.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-monthly-update-new-version.csv -O /tmp/pp-monthly.csv\n\nsed -i '1i transaction,price,transfer_date,postcode,property_type,newly_built,duration,paon,saon,street,locality,city,district,county,ppd_category_type' /tmp/pp-monthly.csv\n\n"
+		
+		
+%spark2.spark\n\nval path = \"/tmp/pp-monthly.csv\"\nval ppd_data = spark.read.format(\"csv\").option(\"header\", \"true\").load(path)
+
+
+%spark2.spark\n\nppd_data.printSchema()
+
+%spark2.spark\n\nppd_data.show()
+
+%spark2.spark\n\n// Creates a temporary view\nppd_data.createOrReplaceTempView(\"ppd_data\")
+
+%spark2.sql\n\nSELECT postcode,price,transfer_date FROM ppd_data ORDER BY price desc limit 5
+
+%spark2.sql \n\nSELECT postcode, count(transaction) as num_trans FROM ppd_data GROUP BY postcode\nORDER BY num_trans desc limit 5
+
+
+%spark2.spark\n\nimport org.apache.spark.sql.functions._                        // Import additional helper functions\n\nval svSummaries = ppd_data.select(\"county\").as[String]      // Convert to String type (becomes a Dataset)\n\n// Extract individual words\nval words = svSummaries\n  .flatMap(_.split(\"\\\\s+\"))                             // Split on whitespace\n  .filter(_ != \"\")                                      // Remove empty words\n  .map(_.toLowerCase())                                 // Lowercase\n\n// Word count\nwords.groupByKey(value => value)                        // Group by word\n     .count()                                           // Count\n     .orderBy($\"count(1)\" desc)                         // Order by most frequent\n     .show()                                            // Display results
+
+%spark2.spark\n\nval stopWords = List(\"a\", \"an\", \"to\", \"and\", \"the\", \"of\", \"in\", \"for\", \"by\", \"at\")      // Basic set of stop words\nval punctuationMarks = List(\"-\", \",\", \";\", \":\", \".\", \"?\", \"!\")                          // Basic set of punctuation marks\n\n// Filter out stop words and punctuation marks\nval wordsFiltered = words                                                               // Create a new Dataset\n    .filter(!stopWords.contains(_))                                                     // Remove stop words\n    .filter(!punctuationMarks.contains(_))                                              // Remove punctuation marks
+
+
+
+%spark2.spark\n\n// Word count\nwordsFiltered\n  .groupBy($\"value\" as \"word\")                          // Group on values (default) column name\n  .agg(count(\"*\") as \"occurences\")                      // Aggregate\n  .orderBy($\"occurences\" desc)                          // Display most common words first\n  .show()                                               // Display results
+
+
+
+
