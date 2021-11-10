@@ -1,5 +1,7 @@
 # neutrino
 
+https://www.youtube.com/watch?v=ZzNNMBJOFQg
+
 https://static.coindesk.com/wp-content/uploads/2021/06/EIP-1559-Ethereum-Fee-Market-Upgrade-Explained-1.pdf
 
 https://youtu.be/3jPYk7ucrjo
