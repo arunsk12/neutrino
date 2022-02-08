@@ -1,5 +1,13 @@
 # neutrino
 
+https://www.youtube.com/watch?v=ebWL2TrIssA&ab_channel=TheSwedishInvestor
+
+https://media.oiipdf.com/pdf/92efeffc-3461-427d-9dee-e456fc83ed05.pdf
+
+https://www.calpers.ca.gov/docs/board-agendas/201901/full/day1/05-howard-marks-pp-a.pdf
+
+
+
 https://hsbchrdirect.service-now.com/hrsp?id=kb_article&sys_id=2f4f960d1b20b4d4321a6356b04bcbfb&dm_i=1RB6,7N5YX,5ALFBF,V4TPY,1
 
 https://static.coindesk.com/wp-content/uploads/2021/06/EIP-1559-Ethereum-Fee-Market-Upgrade-Explained-1.pdf
